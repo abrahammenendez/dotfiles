@@ -21,6 +21,7 @@ alias tt="exa --tree --level=2 --long"
 # Jumps
 alias ~="cd ~"
 alias code='cd ~/dev/abrahammenendez/code'
+alias envi="cd ~/dev/env/"
 alias dotfiles="cd ~/dev/env/.dotfiles"
 
 # Linux
