@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTFILES_PATH/scripts/core/_main.sh"
+
+##? Change the wallpaper
+#?? 1.0.0
+##?
+##? Usage:
+##?    change_wallpaper               # Pick a random wallpaper on the wallpaper folder
+##?    change_wallpaper codelytv.jpg  # Set the /Pictures/Wallpapers/codelytv.jpg as the wallpaper
+##?    change_wallpaper <colorName>   # Create a wallpaper with that color name
+##?    change_wallpaper '#<colorHex>' # Create a wallpaper with that color hexadecimal code
+##?    change_wallpaper <url>         # Downloads the wallpaper to your wallpaper folder
+
+docs::eval_help "$@"
+
+WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
+WALLPAPER_FILENAME=${1-random_from_wallpapers_directory}
+WALLPAPER_FILE_PATH="$WALLPAPER_DIR/$WALLPAPER_FILENAME"
+
+VALID_URL_REGEX='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+
+if [[ $WALLPAPER_FILENAME =~ $VALID_URL_REGEX ]]; then
+  echo "👇 Downloading wallpaper from $WALLPAPER_FILENAME"
+  wget -P "$WALLPAPER_DIR" "$WALLPAPER_FILENAME"
+
+  WALLPAPER_FILENAME=${WALLPAPER_FILENAME##*/}
+  WALLPAPER_FILE_PATH="$WALLPAPER_DIR/$WALLPAPER_FILENAME"
+elif [ -n "$WALLPAPER_FILENAME" ]; then
+  WALLPAPER_FILE_PATH="$WALLPAPER_DIR/$WALLPAPER_FILENAME"
+  COLOR_WALLPAPER_FILE_PATH="$WALLPAPER_DIR/Colors/$WALLPAPER_FILENAME.jpg"
+
+  if [ "$WALLPAPER_FILENAME" == 'random_from_wallpapers_directory' ]; then
+    echo "🌈 Choosing a random wallpaper between your favourites"
+    WALLPAPER_FILE_PATH=$(find "$WALLPAPER_DIR"/* -maxdepth 0 ! -name "$(basename "$WALLPAPER_DIR/Colors/")" | shuf -n 1)
+  elif [ -f "$WALLPAPER_FILE_PATH" ]; then
+    echo "👍 Nice pic!"
+  elif [ -f "$COLOR_WALLPAPER_FILE_PATH" ]; then
+    echo "👍 Nice color!"
+    WALLPAPER_FILE_PATH="$COLOR_WALLPAPER_FILE_PATH"
+  elif [ ! -f "$COLOR_WALLPAPER_FILE_PATH" ]; then
+    echo "🖌️  Painting a wallpaper full of $WALLPAPER_FILENAME and saving it for further usage"
+    WALLPAPER_COLOR=$WALLPAPER_FILENAME
+
+    convert -size 128x128 xc:$WALLPAPER_COLOR $COLOR_WALLPAPER_FILE_PATH
+
+    WALLPAPER_FILE_PATH="$COLOR_WALLPAPER_FILE_PATH"
+  fi
+fi
+
+echo "🚀 Changing wallpaper to $WALLPAPER_FILE_PATH"
+
+osascript -e 'tell application "System Events" to tell every desktop to set picture to "'"$WALLPAPER_FILE_PATH"'"'
+
+echo "✅ Enjoy!"

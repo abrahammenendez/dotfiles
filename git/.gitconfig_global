@@ -1,0 +1,31 @@
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# IDE
+.idea/
+*.iml
+*.iws
+.idea-compl
+*.sc
+.vscode/
+
+# Clojure
+.lein-repl-history
+.lein-failures
+completer.hist
+.nrepl-port
+
+# Scala
+libsigar-universal64-macosx.dylib
