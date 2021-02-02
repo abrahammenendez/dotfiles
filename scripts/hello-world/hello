@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$DOTLY_PATH/scripts/core/_main.sh"
+
+##? Add a hello message
+##?
+##? Usage:
+##?    hello
+docs::parse "$@"
+
+
+echo "           _               _                     ";
+echo "     /\   | |             | |                    ";
+echo "    /  \  | |__  _ __ __ _| |__   __ _ _ __ ___  ";
+echo "   / /\ \ | '_ \| '__/ _\` | '_ \ / _\` | '_ \` _ \ ";
+echo "  / ____ \| |_) | | | (_| | | | | (_| | | | | | |";
+echo " /_/    \_\_.__/|_|  \__,_|_| |_|\__,_|_| |_| |_|";
+echo "                                                 ";
+echo "                                                 ";
