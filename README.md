@@ -1,5 +1,5 @@
 <h1 align="center">
-  My dotfiles! They are pretty cool. I used <a href="https://github.com/CodelyTV/dotly">🌚 dotly</a> to help me set them up, it's a fantastic project.
+  [OUTDATED] My dotfiles! They are pretty cool. I used <a href="https://github.com/CodelyTV/dotly">🌚 dotly</a> to help me set them up, it's a fantastic project.
 </h1>
 
 ## Restore your Dotfiles
